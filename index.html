@@ -7,6 +7,29 @@
 	<script src="app.js" defer></script>
 </head>
 <body>
-	<h1 id="message"></h1>
+	<h1>Today's Players</h1>
+	<form id="personForm">
+		<div id="personInputs"></div>
+		<button type="submit">제출</button>
+	</form>
+	<div id="result"></div>
+	<script>
+		// 동적으로 최대 16명 입력 폼 생성
+		const personInputs = document.getElementById('personInputs');
+		for (let i = 0; i < 16; i++) {
+			const div = document.createElement('div');
+			div.innerHTML = `
+				<label>이름: <input type="text" name="name${i}" /></label>
+				<label>성별: 
+					<select name="gender${i}">
+						<option value="">선택</option>
+						<option value="남">남</option>
+						<option value="여">여</option>
+					</select>
+				</label>
+			`;
+			personInputs.appendChild(div);
+		}
+	</script>
 </body>
 </html>
