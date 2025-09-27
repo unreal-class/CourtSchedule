@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<h		.container {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+			gap: 15px;
+			max-width: 100%;
+			overflow-x: hidden;ang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,60 +14,66 @@
 	<style>
 		body {
 			margin: 0;
-			padding: 20px;
+			padding: 10px;
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 			min-height: 100vh;
+			box-sizing: border-box;
+		}
+		*, *::before, *::after {
+			box-sizing: border-box;
 		}
 		.container {
 			display: flex;
 			flex-direction: column;
 			min-height: 100vh;
-			gap: 20px;
+			gap: 15px;
+			max-width: 100%;
+			overflow-x: hidden;
 		}
 		.main-header {
 			text-align: center;
 			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 			color: white;
-			padding: 40px 30px;
-			border-radius: 20px;
-			margin-bottom: 20px;
+			padding: 20px 15px;
+			border-radius: 15px;
+			margin-bottom: 15px;
 			box-shadow: 0 8px 32px rgba(0,0,0,0.2);
 			backdrop-filter: blur(10px);
 			border: 1px solid rgba(255,255,255,0.1);
 		}
 		.main-header h1 {
 			margin: 0 0 10px 0;
-			font-size: 3.5em;
+			font-size: clamp(2em, 8vw, 3.5em);
 			font-weight: 900;
 			color: #ffffff;
 			text-shadow: 3px 3px 6px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.5);
 		}
 		.main-header p {
 			margin: 0;
-			font-size: 1.2em;
+			font-size: clamp(0.9em, 4vw, 1.2em);
 			opacity: 0.9;
 		}
 		.top-panel {
 			background: rgba(255,255,255,0.95);
 			backdrop-filter: blur(10px);
-			padding: 30px;
-			border-radius: 20px;
+			padding: 20px 15px;
+			border-radius: 15px;
 			box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 			border: 1px solid rgba(255,255,255,0.2);
 		}
 		.bottom-panel {
 			background: rgba(255,255,255,0.95);
 			backdrop-filter: blur(10px);
-			padding: 30px;
-			border-radius: 20px;
+			padding: 20px 15px;
+			border-radius: 15px;
 			box-shadow: 0 8px 32px rgba(0,0,0,0.1);
 			border: 1px solid rgba(255,255,255,0.2);
 		}
 		.developer-panel {
 			background: rgba(255,193,7,0.1);
 			backdrop-filter: blur(10px);
-			padding: 25px;
+			padding: 20px 15px;
 			border-radius: 15px;
 			box-shadow: 0 6px 24px rgba(255,193,7,0.2);
 			border: 1px solid rgba(255,193,7,0.3);
@@ -78,16 +90,22 @@
 		}
 		.court-container {
 			display: flex;
-			flex-direction: row;
-			gap: 20px;
-			justify-content: space-between;
+			flex-direction: column;
+			gap: 15px;
+		}
+		@media (min-width: 768px) {
+			.court-container {
+				flex-direction: row;
+				gap: 20px;
+				justify-content: space-between;
+			}
 		}
 		.court {
 			flex: 1;
 			background: rgba(255,255,255,0.9);
 			backdrop-filter: blur(5px);
-			padding: 20px;
-			border-radius: 15px;
+			padding: 15px;
+			border-radius: 12px;
 			box-shadow: 0 4px 20px rgba(76,175,80,0.2);
 			border: 2px solid rgba(76,175,80,0.3);
 			min-width: 0;
@@ -192,7 +210,8 @@
 		.match-container {
 			display: flex;
 			align-items: center;
-			gap: 10px;
+			gap: 8px;
+			flex-wrap: wrap;
 		}
 		.complete-btn {
 			background: linear-gradient(135deg, #4CAF50, #45a049);
@@ -278,8 +297,9 @@
 		}
 		.test-buttons {
 			display: flex;
-			gap: 10px;
-			margin-bottom: 20px;
+			gap: 8px;
+			margin-bottom: 15px;
+			flex-wrap: wrap;
 		}
 		#testButton, #fixedTestButton {
 			background: linear-gradient(135deg, #FF9800, #F57C00);
@@ -310,10 +330,11 @@
 			background-color: #45a049;
 		}
 		.gender-selection {
-			display: inline-flex;
+			display: flex;
 			align-items: center;
-			gap: 10px;
-			margin: 0 15px;
+			gap: 8px;
+			margin: 5px 0;
+			flex-wrap: wrap;
 		}
 		.gender-selection label {
 			display: flex;
@@ -332,7 +353,8 @@
 			font-size: 14px;
 			transition: all 0.3s ease;
 			background: rgba(255,255,255,0.9);
-			width: 5em; /* 한글 5자 정도 크기 */
+			width: clamp(4em, 20vw, 6em);
+			max-width: 100%;
 		}
 		input[type="text"]:focus {
 			outline: none;
