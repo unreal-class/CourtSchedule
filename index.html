@@ -3,33 +3,459 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Hello World Web Service</title>
+	<title>AM5 CLUB - 테니스 코트 스케줄</title>
 	<script src="app.js" defer></script>
+	<style>
+		body {
+			margin: 0;
+			padding: 20px;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			min-height: 100vh;
+		}
+		.container {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+			gap: 20px;
+		}
+		.main-header {
+			text-align: center;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			padding: 40px 30px;
+			border-radius: 20px;
+			margin-bottom: 20px;
+			box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255,255,255,0.1);
+		}
+		.main-header h1 {
+			margin: 0 0 10px 0;
+			font-size: 3.5em;
+			font-weight: 900;
+			color: #ffffff;
+			text-shadow: 3px 3px 6px rgba(0,0,0,0.4), 0 0 20px rgba(255,255,255,0.5);
+		}
+		.main-header p {
+			margin: 0;
+			font-size: 1.2em;
+			opacity: 0.9;
+		}
+		.top-panel {
+			background: rgba(255,255,255,0.95);
+			backdrop-filter: blur(10px);
+			padding: 30px;
+			border-radius: 20px;
+			box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+			border: 1px solid rgba(255,255,255,0.2);
+		}
+		.bottom-panel {
+			background: rgba(255,255,255,0.95);
+			backdrop-filter: blur(10px);
+			padding: 30px;
+			border-radius: 20px;
+			box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+			border: 1px solid rgba(255,255,255,0.2);
+		}
+		.developer-panel {
+			background: rgba(255,193,7,0.1);
+			backdrop-filter: blur(10px);
+			padding: 25px;
+			border-radius: 15px;
+			box-shadow: 0 6px 24px rgba(255,193,7,0.2);
+			border: 1px solid rgba(255,193,7,0.3);
+		}
+		h1, h2 {
+			margin-top: 0;
+			color: #333;
+			font-weight: 600;
+		}
+		h2 {
+			color: #555;
+			margin-bottom: 20px;
+			font-size: 1.8em;
+		}
+		.court-container {
+			display: flex;
+			flex-direction: row;
+			gap: 20px;
+			justify-content: space-between;
+		}
+		.court {
+			flex: 1;
+			background: rgba(255,255,255,0.9);
+			backdrop-filter: blur(5px);
+			padding: 20px;
+			border-radius: 15px;
+			box-shadow: 0 4px 20px rgba(76,175,80,0.2);
+			border: 2px solid rgba(76,175,80,0.3);
+			min-width: 0;
+			transition: all 0.3s ease;
+		}
+		.court:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 30px rgba(76,175,80,0.3);
+		}
+		.court-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+		.court h3 {
+			margin: 0;
+			color: #4CAF50;
+		}
+		.status-indicator {
+			padding: 8px 16px;
+			border-radius: 6px;
+			font-size: 12px;
+			font-weight: 600;
+			color: white;
+			background: linear-gradient(135deg, #4CAF50, #45a049);
+			box-shadow: 0 2px 8px rgba(76,175,80,0.3);
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+		.status-indicator.playing {
+			background: linear-gradient(135deg, #333, #555);
+			box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+		}
+		.court-status {
+			text-align: center;
+		}
+		#court1-status, #court2-status {
+			font-weight: bold;
+			color: #666;
+		}
+		.assign-btn {
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			color: white;
+			border: none;
+			padding: 12px 24px;
+			border-radius: 6px;
+			cursor: pointer;
+			margin-top: 15px;
+			font-weight: 600;
+			font-size: 14px;
+			transition: all 0.3s ease;
+			box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+		}
+		.assign-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+		}
+		.court-controls {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			margin-top: 10px;
+		}
+		.match-result {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 15px;
+			background: rgba(255,255,255,0.9);
+			backdrop-filter: blur(5px);
+			border: 1px solid rgba(255,255,255,0.3);
+			border-radius: 15px;
+			box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+		}
+		.team {
+			text-align: center;
+			flex: 1;
+		}
+		.team strong {
+			display: block;
+			margin-bottom: 5px;
+			color: #333;
+		}
+		.vs {
+			font-weight: bold;
+			color: #ff5722;
+			margin: 0 10px;
+		}
+		#court1-team-a, #court1-team-b, #court2-team-a, #court2-team-b {
+			font-size: 12px;
+			color: #666;
+		}
+		.player-male {
+			color: #2196F3 !important; /* 파란색 */
+			font-weight: bold;
+		}
+		.player-female {
+			color: #E91E63 !important; /* 핑크색 */
+			font-weight: bold;
+		}
+		.match-container {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		.complete-btn {
+			background: linear-gradient(135deg, #4CAF50, #45a049);
+			color: white;
+			border: none;
+			padding: 10px 18px;
+			border-radius: 6px;
+			cursor: pointer;
+			flex-shrink: 0;
+			font-weight: 600;
+			transition: all 0.3s ease;
+			box-shadow: 0 3px 12px rgba(76,175,80,0.3);
+		}
+		.complete-btn:hover:not(:disabled) {
+			transform: translateY(-1px);
+			box-shadow: 0 5px 18px rgba(76,175,80,0.4);
+		}
+		.complete-btn:disabled {
+			background: #ccc;
+			cursor: not-allowed;
+			transform: none;
+			box-shadow: none;
+		}
+		.cancel-btn {
+			background: linear-gradient(135deg, #f44336, #d32f2f);
+			color: white;
+			border: none;
+			padding: 10px 18px;
+			border-radius: 6px;
+			cursor: pointer;
+			flex-shrink: 0;
+			font-weight: 600;
+			transition: all 0.3s ease;
+			box-shadow: 0 3px 12px rgba(244,67,54,0.3);
+		}
+		.cancel-btn:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 5px 18px rgba(244,67,54,0.4);
+		}
+		.button-container {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+		}
+		.match-count {
+			margin: 0 10px;
+			font-size: 16px;
+			color: #666;
+			font-weight: bold;
+		}
+		.match-history {
+			margin-top: 15px;
+			max-height: 200px;
+			overflow-y: auto;
+		}
+		.history-item {
+			background: rgba(255,255,255,0.7);
+			backdrop-filter: blur(5px);
+			border: 1px solid rgba(255,255,255,0.3);
+			border-radius: 10px;
+			padding: 12px;
+			margin-bottom: 8px;
+			font-size: 12px;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+			transition: all 0.2s ease;
+		}
+		.history-item:hover {
+			transform: translateX(5px);
+			box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+		}
+		.history-item .teams {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.history-item .team {
+			text-align: center;
+		}
+		.history-item .vs {
+			font-weight: bold;
+			color: #ff5722;
+			margin: 0 5px;
+		}
+		.test-buttons {
+			display: flex;
+			gap: 10px;
+			margin-bottom: 20px;
+		}
+		#testButton, #fixedTestButton {
+			background: linear-gradient(135deg, #FF9800, #F57C00);
+			color: white;
+			border: none;
+			padding: 12px 24px;
+			border-radius: 6px;
+			cursor: pointer;
+			font-weight: 600;
+			font-size: 14px;
+			transition: all 0.3s ease;
+			box-shadow: 0 4px 15px rgba(255,152,0,0.3);
+		}
+		#testButton:hover, #fixedTestButton:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(255,152,0,0.4);
+		}
+		#personForm button[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 4px;
+			cursor: pointer;
+			margin-top: 15px;
+		}
+		#personForm button[type="submit"]:hover {
+			background-color: #45a049;
+		}
+		.gender-selection {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			margin: 0 15px;
+		}
+		.gender-selection label {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			cursor: pointer;
+		}
+		.gender-selection input[type="radio"] {
+			margin: 0;
+			transform: scale(1.2);
+		}
+		input[type="text"] {
+			padding: 8px 12px;
+			border: 2px solid rgba(0,0,0,0.1);
+			border-radius: 10px;
+			font-size: 14px;
+			transition: all 0.3s ease;
+			background: rgba(255,255,255,0.9);
+			width: 5em; /* 한글 5자 정도 크기 */
+		}
+		input[type="text"]:focus {
+			outline: none;
+			border-color: #667eea;
+			box-shadow: 0 0 10px rgba(102,126,234,0.2);
+		}
+		.entry-btn {
+			background: linear-gradient(135deg, #4CAF50, #45a049);
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 6px;
+			cursor: pointer;
+			font-weight: 600;
+			font-size: 12px;
+			transition: all 0.3s ease;
+			box-shadow: 0 3px 10px rgba(76,175,80,0.3);
+			margin-left: 10px;
+		}
+		.entry-btn:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+		}
+		.entry-btn.exit {
+			background: linear-gradient(135deg, #f44336, #d32f2f);
+			box-shadow: 0 3px 10px rgba(244,67,54,0.3);
+		}
+		.entry-btn.exit:hover {
+			box-shadow: 0 4px 15px rgba(244,67,54,0.4);
+		}
+	</style>
 </head>
 <body>
-	<h1>Today's Players</h1>
-	<form id="personForm">
-		<div id="personInputs"></div>
-		<button type="submit">제출</button>
-	</form>
-	<div id="result"></div>
-	<script>
-		// 동적으로 최대 16명 입력 폼 생성
-		const personInputs = document.getElementById('personInputs');
-		for (let i = 0; i < 16; i++) {
-			const div = document.createElement('div');
-			div.innerHTML = `
-				<label>이름: <input type="text" name="name${i}" /></label>
-				<label>성별: 
-					<select name="gender${i}">
-						<option value="">선택</option>
-						<option value="남">남</option>
-						<option value="여">여</option>
-					</select>
-				</label>
-			`;
-			personInputs.appendChild(div);
-		}
-	</script>
+	<div class="container">
+		<!-- 메인 헤더 -->
+		<div class="main-header">
+			<h1>AM5 CLUB</h1>
+			<p>경기 배정 시스템 v.1</p>
+		</div>
+		
+		<!-- 코트 정보 (상단) -->
+		<div class="top-panel">
+			<h2>코트 정보</h2>
+			<div id="courtInfo">
+				<div class="court-container">
+					<div class="court" id="court1">
+						<div class="court-header">
+							<h3>1번 코트</h3>
+							<div class="status-indicator" id="court1-status-indicator">대기중</div>
+						</div>
+						<div class="court-status">
+							<div id="court1-players"></div>
+							<div class="court-controls">
+								<button type="button" class="assign-btn" onclick="assignToCourt(1)">선수 배정</button>
+								<div class="match-container" id="court1-match-container" style="display: none;">
+									<div class="match-result" id="court1-match">
+										<div class="team team-a">
+											<div id="court1-team-a">-</div>
+										</div>
+										<div class="vs">VS</div>
+										<div class="team team-b">
+											<div id="court1-team-b">-</div>
+										</div>
+									</div>
+									<div class="button-container">
+										<button type="button" class="complete-btn" onclick="completeMatch(1)" disabled>완료</button>
+										<button type="button" class="cancel-btn" onclick="cancelAssignment(1)" style="display: none;">취소</button>
+									</div>
+								</div>
+							</div>
+							<div id="court1-history" class="match-history"></div>
+						</div>
+					</div>
+					<div class="court" id="court2">
+						<div class="court-header">
+							<h3>2번 코트</h3>
+							<div class="status-indicator" id="court2-status-indicator">대기중</div>
+						</div>
+						<div class="court-status">
+							<div id="court2-players"></div>
+							<div class="court-controls">
+								<button type="button" class="assign-btn" onclick="assignToCourt(2)">선수 배정</button>
+								<div class="match-container" id="court2-match-container" style="display: none;">
+									<div class="match-result" id="court2-match">
+										<div class="team team-a">
+											<div id="court2-team-a">-</div>
+										</div>
+										<div class="vs">VS</div>
+										<div class="team team-b">
+											<div id="court2-team-b">-</div>
+										</div>
+									</div>
+									<div class="button-container">
+										<button type="button" class="complete-btn" onclick="completeMatch(2)" disabled>완료</button>
+										<button type="button" class="cancel-btn" onclick="cancelAssignment(2)" style="display: none;">취소</button>
+									</div>
+								</div>
+							</div>
+							<div id="court2-history" class="match-history"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 선수 정보 (하단) -->
+		<div class="bottom-panel">
+			<h2>선수 정보</h2>
+			<form id="personForm">
+				<div id="personInputs"></div>
+			</form>
+			<div id="result"></div>
+		</div>
+		
+		<!-- 개발자 섹션 -->
+		<div class="developer-panel">
+			<h2>개발자</h2>
+			<div class="test-buttons">
+				<button type="button" id="testButton">테스트입장</button>
+				<button type="button" id="fixedTestButton">FIXED 테스트 입장</button>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
