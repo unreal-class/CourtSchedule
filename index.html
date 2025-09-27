@@ -555,6 +555,40 @@
 				padding: 2px 4px;
 			}
 		}
+		
+		/* 테이블 스타일 */
+		#personInputs td {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: center;
+		}
+		
+		#personInputs input[type="text"] {
+			width: 100%;
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+		
+		#personInputs button {
+			padding: 5px 10px;
+			background: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		
+		#personInputs button.exit {
+			background: #f44336;
+		}
+		
+		#noPlayersMessage {
+			text-align: center;
+			color: #666;
+			font-style: italic;
+			margin: 20px 0;
+		}
 	</style>
 </head>
 <body>
@@ -634,7 +668,25 @@
 		<div class="bottom-panel">
 			<h2>선수 정보</h2>
 			<form id="personForm">
-				<div id="personInputs"></div>
+				<div style="border: 1px solid #ccc; padding: 10px;">
+					<div style="background: #f0f0f0; padding: 5px; font-weight: bold; border-bottom: 1px solid #ccc;">
+						선수 목록
+					</div>
+					<table style="width: 100%; border-collapse: collapse;">
+						<thead>
+							<tr>
+								<th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5;">이름</th>
+								<th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5;">성별</th>
+								<th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5;">경기수</th>
+								<th style="border: 1px solid #ddd; padding: 8px; background: #f5f5f5;">상태</th>
+							</tr>
+						</thead>
+						<tbody id="personInputs">
+							<!-- 선수 정보가 여기에 추가됩니다 -->
+						</tbody>
+					</table>
+					<p id="noPlayersMessage">아직 입장한 선수가 없습니다. "테스트입장" 버튼을 클릭하세요.</p>
+				</div>
 			</form>
 			<div id="result"></div>
 		</div>

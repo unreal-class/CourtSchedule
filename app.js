@@ -171,12 +171,19 @@ function toggleAbsent(index) {
 		// 다음 선수 입력 폼 추가
 		addNextPlayer();
 	} else {
-		// 퇴장 -> 해당 선수 정보 완전 삭제
-		const playerDiv = button.parentElement;
-		playerDiv.remove();
+		// 퇴장 -> 해당 선수 정보 완전 삭제 (테이블 행 제거)
+		const playerRow = button.parentElement.parentElement; // td -> tr
+		playerRow.remove();
 		
 		// absentPlayers에서도 제거
 		absentPlayers.delete(index);
+		
+		// 모든 선수가 제거되었으면 메시지 다시 표시
+		const personInputs = document.getElementById('personInputs');
+		const noPlayersMessage = document.getElementById('noPlayersMessage');
+		if (personInputs.children.length === 0 && noPlayersMessage) {
+			noPlayersMessage.style.display = 'block';
+		}
 	}
 }
 
@@ -206,17 +213,24 @@ function setSelectedGender(playerIndex, genderValue) {
 
 function addNextPlayer() {
 	const personInputs = document.getElementById('personInputs');
-	const div = document.createElement('div');
-	div.innerHTML = `
-		<label>이름: <input type="text" name="name${playerCount}" /></label>
-		<div class="gender-selection">
+	const noPlayersMessage = document.getElementById('noPlayersMessage');
+	
+	// 첫 번째 선수가 추가될 때 메시지 숨기기
+	if (noPlayersMessage && playerCount === 0) {
+		noPlayersMessage.style.display = 'none';
+	}
+	
+	const tr = document.createElement('tr');
+	tr.innerHTML = `
+		<td><input type="text" name="name${playerCount}" placeholder="이름 입력" /></td>
+		<td>
 			<label><input type="radio" name="gender${playerCount}" value="남" checked> 남</label>
 			<label><input type="radio" name="gender${playerCount}" value="여"> 여</label>
-		</div>
-		<span class="match-count" id="match-count-${playerCount}">경기수: 0</span>
-		<button type="button" class="entry-btn" onclick="toggleAbsent(${playerCount})">입장</button>
+		</td>
+		<td><span class="match-count" id="match-count-${playerCount}">0</span></td>
+		<td><button type="button" onclick="toggleAbsent(${playerCount})">입장</button></td>
 	`;
-	personInputs.appendChild(div);
+	personInputs.appendChild(tr);
 	playerCount++;
 }
 
