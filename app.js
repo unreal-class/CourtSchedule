@@ -635,7 +635,7 @@ function completeMatch(courtNumber) {
 					// 화면에 경기수 업데이트
 					const matchCountSpan = document.getElementById(`match-count-${i}`);
 					if (matchCountSpan) {
-						matchCountSpan.textContent = `경기수: ${currentCount + 1}`;
+						matchCountSpan.textContent = `${currentCount + 1}`;
 						console.log(`${playerName}의 경기수가 ${currentCount + 1}로 업데이트됨`);
 					} else {
 						console.log(`match-count-${i} 요소를 찾을 수 없음`);
