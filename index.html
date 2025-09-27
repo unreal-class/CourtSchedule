@@ -329,50 +329,58 @@
 		#personForm button[type="submit"]:hover {
 			background-color: #45a049;
 		}
+		/* 새로운 컴팩트 성별 선택 스타일 */
 		.gender-selection {
-			display: flex;
+			display: inline-flex;
 			align-items: center;
-			gap: 8px;
-			margin: 5px 0;
-			flex-wrap: wrap;
+			gap: 2px;
+			margin: 0;
+			flex-shrink: 0;
 		}
 		.gender-selection label {
-			display: flex;
+			display: inline-flex;
 			align-items: center;
-			gap: 5px;
+			gap: 1px;
 			cursor: pointer;
+			font-size: 10px;
+			color: #666;
+			white-space: nowrap;
 		}
 		.gender-selection input[type="radio"] {
 			margin: 0;
-			transform: scale(1.2);
+			transform: scale(0.8);
+			flex-shrink: 0;
 		}
+		/* 새로운 컴팩트 입력 필드 스타일 */
 		input[type="text"] {
-			padding: 8px 12px;
-			border: 2px solid rgba(0,0,0,0.1);
-			border-radius: 10px;
-			font-size: 14px;
-			transition: all 0.3s ease;
-			background: rgba(255,255,255,0.9);
-			width: clamp(4em, 20vw, 6em);
-			max-width: 100%;
+			padding: 4px 6px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 11px;
+			transition: all 0.2s ease;
+			background: #fff;
+			width: 60px;
+			flex-shrink: 0;
 		}
 		input[type="text"]:focus {
 			outline: none;
 			border-color: #667eea;
 			box-shadow: 0 0 10px rgba(102,126,234,0.2);
 		}
+		/* 새로운 컴팩트 버튼 스타일 */
 		.entry-btn {
-			background: linear-gradient(135deg, #4CAF50, #45a049);
+			background: #4CAF50;
 			color: white;
 			border: none;
-			padding: 8px 16px;
-			border-radius: 6px;
+			padding: 3px 6px;
+			border-radius: 3px;
 			cursor: pointer;
-			font-weight: 600;
-			font-size: 12px;
-			transition: all 0.3s ease;
-			box-shadow: 0 3px 10px rgba(76,175,80,0.3);
-			margin-left: 10px;
+			font-weight: 500;
+			font-size: 9px;
+			transition: background 0.2s ease;
+			margin-left: 2px;
+			flex-shrink: 0;
+			white-space: nowrap;
 		}
 		.entry-btn:hover {
 			transform: translateY(-1px);
@@ -384,6 +392,168 @@
 		}
 		.entry-btn.exit:hover {
 			box-shadow: 0 4px 15px rgba(244,67,54,0.4);
+		}
+		/* 선수 정보를 강제로 한 줄에 표시 */
+		#personForm > div {
+			display: flex !important;
+			align-items: center !important;
+			justify-content: flex-start !important;
+			flex-direction: row !important;
+			flex-wrap: nowrap !important;
+			gap: 6px !important;
+			padding: 8px !important;
+			margin-bottom: 5px !important;
+			border: 1px solid #ddd !important;
+			border-radius: 6px !important;
+			background: rgba(255,255,255,0.95) !important;
+			min-height: 40px !important;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+			width: 100% !important;
+			box-sizing: border-box !important;
+		}
+		
+		/* 모든 자식 요소들을 인라인으로 강제 배치 */
+		#personForm > div * {
+			display: inline-block !important;
+			vertical-align: middle !important;
+			margin: 0 !important;
+		}
+		
+		/* 이름 입력 필드 */
+		#personForm > div input[type="text"] {
+			width: 60px !important;
+			flex-shrink: 0 !important;
+			padding: 4px 6px !important;
+			font-size: 12px !important;
+			border: 1px solid #ccc !important;
+			border-radius: 4px !important;
+			margin-right: 6px !important;
+		}
+		
+		/* 성별 선택 - 강제 인라인 */
+		#personForm > div .gender-selection {
+			display: inline-flex !important;
+			align-items: center !important;
+			gap: 3px !important;
+			flex-shrink: 0 !important;
+			margin: 0 6px 0 0 !important;
+		}
+		
+		#personForm > div .gender-selection label {
+			display: inline-flex !important;
+			align-items: center !important;
+			gap: 2px !important;
+			font-size: 11px !important;
+			white-space: nowrap !important;
+			margin: 0 !important;
+		}
+		
+		#personForm > div .gender-selection input[type="radio"] {
+			margin: 0 !important;
+			transform: scale(0.9) !important;
+		}
+		
+		/* 경기수 표시 */
+		#personForm > div .match-count {
+			display: inline-block !important;
+			min-width: 25px !important;
+			text-align: center !important;
+			font-size: 12px !important;
+			font-weight: bold !important;
+			color: #666 !important;
+			flex-shrink: 0 !important;
+			margin: 0 6px !important;
+		}
+		
+		/* 입장/퇴장 버튼 */
+		#personForm > div .entry-btn {
+			display: inline-block !important;
+			padding: 4px 8px !important;
+			font-size: 10px !important;
+			font-weight: 500 !important;
+			border: none !important;
+			border-radius: 4px !important;
+			cursor: pointer !important;
+			flex-shrink: 0 !important;
+			white-space: nowrap !important;
+			margin: 0 2px !important;
+			vertical-align: middle !important;
+		}
+		
+		#personForm > div .entry-btn:not(.exit) {
+			background: #4CAF50 !important;
+			color: white !important;
+		}
+		
+		#personForm > div .entry-btn.exit {
+			background: #f44336 !important;
+			color: white !important;
+		}
+		/* 모바일 최적화 */
+		@media (max-width: 600px) {
+			#personForm > div {
+				gap: 6px;
+				padding: 4px 8px;
+				min-height: 36px;
+			}
+			
+			#personForm > div input[type="text"] {
+				width: 60px;
+				font-size: 11px;
+				padding: 3px 5px;
+			}
+			
+			#personForm > div .gender-selection label {
+				font-size: 10px;
+			}
+			
+			#personForm > div .match-count {
+				font-size: 11px;
+				min-width: 25px;
+			}
+			
+			#personForm > div .entry-btn {
+				font-size: 9px;
+				padding: 3px 6px;
+			}
+		}
+		
+		/* 매우 작은 화면 */
+		@media (max-width: 400px) {
+			#personForm > div {
+				gap: 4px;
+				padding: 3px 6px;
+				min-height: 32px;
+			}
+			
+			#personForm > div input[type="text"] {
+				width: 50px;
+				font-size: 10px;
+				padding: 2px 4px;
+			}
+			
+			#personForm > div .gender-selection {
+				gap: 2px;
+			}
+			
+			#personForm > div .gender-selection label {
+				font-size: 9px;
+				gap: 1px;
+			}
+			
+			#personForm > div .gender-selection input[type="radio"] {
+				transform: scale(0.8);
+			}
+			
+			#personForm > div .match-count {
+				font-size: 10px;
+				min-width: 20px;
+			}
+			
+			#personForm > div .entry-btn {
+				font-size: 8px;
+				padding: 2px 4px;
+			}
 		}
 	</style>
 </head>
