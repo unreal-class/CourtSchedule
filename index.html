@@ -301,7 +301,7 @@
 			margin-bottom: 15px;
 			flex-wrap: wrap;
 		}
-		#testButton, #fixedTestButton {
+		#testButton, #fixedTestButton, #defaultEntryButton {
 			background: linear-gradient(135deg, #FF9800, #F57C00);
 			color: white;
 			border: none;
@@ -313,7 +313,7 @@
 			transition: all 0.3s ease;
 			box-shadow: 0 4px 15px rgba(255,152,0,0.3);
 		}
-		#testButton:hover, #fixedTestButton:hover {
+		#testButton:hover, #fixedTestButton:hover, #defaultEntryButton:hover {
 			transform: translateY(-2px);
 			box-shadow: 0 6px 20px rgba(255,152,0,0.4);
 		}
@@ -666,7 +666,10 @@
 		
 		<!-- 선수 정보 (하단) -->
 		<div class="bottom-panel">
-			<h2>선수 정보</h2>
+			<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+				<h2 style="margin: 0;">선수 정보</h2>
+				<button type="button" id="defaultEntryButton">기본입장</button>
+			</div>
 			<form id="personForm">
 				<div style="border: 1px solid #ccc; padding: 10px;">
 					<table style="width: 100%; border-collapse: collapse;">

@@ -87,6 +87,79 @@ function testEntry() {
 	alert(`16명의 선수가 모두 입장하였습니다.\n구성: 남자 ${maleCount}명, 여자 ${femaleCount}명`);
 }
 
+function defaultEntry() {
+	// 기본 선수 목록
+	const defaultPlayers = [
+		{name: '홍성철', gender: '남'},
+		{name: '홍현수', gender: '남'},
+		{name: '이대현', gender: '남'},
+		{name: '이범기', gender: '남'},
+		{name: '최성은', gender: '남'},
+		{name: '최영준', gender: '남'},
+		{name: '이영욱', gender: '남'},
+		{name: '김유식', gender: '남'},
+		{name: '이준민', gender: '남'},
+		{name: '방준호', gender: '남'},
+		{name: '조영진', gender: '남'},
+		{name: '정정훈', gender: '남'},
+		{name: '전혜선', gender: '여'},
+		{name: '양근영', gender: '여'}
+	];
+	
+	// 필요한 만큼 입력 폼 생성
+	while (playerCount < defaultPlayers.length) {
+		addNextPlayer();
+	}
+	
+	// 기본 선수들 입장시키기
+	const enteredRows = []; // 입장한 행들을 저장할 배열
+	
+	for (let entryCount = 0; entryCount < defaultPlayers.length; entryCount++) {
+		const form = document.getElementById('personForm');
+		const nameField = form[`name${entryCount}`];
+		const genderField = form[`gender${entryCount}`];
+		
+		if (nameField && genderField) {
+			const player = defaultPlayers[entryCount];
+			
+			nameField.value = player.name;
+			setSelectedGender(entryCount, player.gender);
+			
+			// 해당 선수의 입장 버튼 찾아서 직접 처리
+			const playerButton = document.querySelector(`button[onclick="toggleAbsent(${entryCount})"]`);
+			if (playerButton) {
+				// 입장 -> 퇴장
+				playerButton.textContent = '퇴장';
+				playerButton.classList.add('exit');
+				// 입장 시 이름과 성별 고정
+				nameField.disabled = true;
+				// 라디오 버튼들도 비활성화
+				const radios = document.querySelectorAll(`input[name="gender${entryCount}"]`);
+				radios.forEach(radio => radio.disabled = true);
+				absentPlayers.delete(entryCount);
+				
+				// 해당 행을 배열에 저장
+				const playerRow = playerButton.parentElement.parentElement;
+				enteredRows.push(playerRow);
+			}
+		}
+	}
+	
+	// 모든 입장한 행들을 올바른 순서로 재배치
+	const personInputs = document.getElementById('personInputs');
+	enteredRows.forEach(row => {
+		personInputs.appendChild(row);
+	});
+	
+	const maleCount = defaultPlayers.filter(p => p.gender === '남').length;
+	const femaleCount = defaultPlayers.filter(p => p.gender === '여').length;
+	
+	// 기본 선수 입장 후 새로운 선수를 위한 빈 입력란 추가
+	addNextPlayer();
+	
+	alert(`기본 선수 ${defaultPlayers.length}명이 입장하였습니다.\n구성: 남자 ${maleCount}명, 여자 ${femaleCount}명`);
+}
+
 function fixedTestEntry() {
 	// 고정된 선수 목록
 	const fixedPlayers = [
@@ -168,7 +241,12 @@ function toggleAbsent(index) {
 		radios.forEach(radio => radio.disabled = true);
 		absentPlayers.delete(index);
 		
-		// 다음 선수 입력 폼 추가
+		// 입장한 선수의 행을 맨 아래로 이동
+		const personInputs = document.getElementById('personInputs');
+		const playerRow = button.parentElement.parentElement; // td -> tr
+		personInputs.appendChild(playerRow);
+		
+		// 다음 선수 입력 폼 추가 (맨 위에)
 		addNextPlayer();
 	} else {
 		// 퇴장 -> 해당 선수 정보 완전 삭제 (테이블 행 제거)
@@ -217,7 +295,9 @@ function addNextPlayer() {
 		<td><span class="match-count" id="match-count-${playerCount}">0</span></td>
 		<td><button type="button" onclick="toggleAbsent(${playerCount})">입장</button></td>
 	`;
-	personInputs.appendChild(tr);
+	
+	// 새 입력란은 맨 위에 추가
+	personInputs.insertBefore(tr, personInputs.firstChild);
 	playerCount++;
 }
 
@@ -732,6 +812,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	// FIXED 테스트입장 버튼 이벤트 리스너 추가
 	const fixedTestButton = document.getElementById('fixedTestButton');
 	fixedTestButton.addEventListener('click', fixedTestEntry);
+	
+	// 기본입장 버튼 이벤트 리스너 추가
+	const defaultEntryButton = document.getElementById('defaultEntryButton');
+	defaultEntryButton.addEventListener('click', defaultEntry);
 	
 	const form = document.getElementById('personForm');
 	form.addEventListener('submit', function(e) {
