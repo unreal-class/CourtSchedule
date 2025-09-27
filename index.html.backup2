@@ -393,23 +393,63 @@
 		.entry-btn.exit:hover {
 			box-shadow: 0 4px 15px rgba(244,67,54,0.4);
 		}
-		/* 선수 정보를 강제로 한 줄에 표시 */
-		#personForm > div {
-			display: flex !important;
-			align-items: center !important;
-			justify-content: flex-start !important;
-			flex-direction: row !important;
-			flex-wrap: nowrap !important;
-			gap: 6px !important;
+		/* 선수 정보 최상위 컨테이너를 세로로 배치 */
+		body #personForm,
+		body #personInputs {
+			display: block !important;
+			width: 100% !important;
+		}
+		
+		/* 각 선수 div를 강제로 세로 배치 */
+		body #personForm > div,
+		body #personInputs > div,
+		body div[id*="personInputs"] > div {
+			display: block !important;
+			width: 100% !important;
+			margin-bottom: 10px !important;
+			clear: both !important;
+		}
+		
+		/* 각 선수 div 내부 요소들을 가로로 배치 */
+		body #personForm > div,
+		body #personInputs > div {
 			padding: 8px !important;
-			margin-bottom: 5px !important;
 			border: 1px solid #ddd !important;
 			border-radius: 6px !important;
 			background: rgba(255,255,255,0.95) !important;
-			min-height: 40px !important;
-			box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
-			width: 100% !important;
 			box-sizing: border-box !important;
+		}
+		
+		/* 선수 정보 내부 요소들 */
+		body #personForm > div > *,
+		body #personInputs > div > * {
+			display: inline-block !important;
+			margin-right: 8px !important;
+			vertical-align: middle !important;
+		}
+		
+		/* CSS로 JavaScript 동적 생성 요소 제어 */
+		body form#personForm div:not(:first-child) {
+			display: block !important;
+			width: 100% !important;
+			float: none !important;
+		}
+		
+		body div#personInputs div {
+			display: block !important;
+			width: 100% !important;
+			float: none !important;
+		}
+		
+		/* 모든 form 내부 div 요소 강제 세로 배치 */
+		form#personForm > * {
+			display: block !important;
+			width: 100% !important;
+		}
+		
+		div#personInputs > * {
+			display: block !important;
+			width: 100% !important;
 		}
 		
 		/* 모든 자식 요소들을 인라인으로 강제 배치 */
@@ -422,30 +462,40 @@
 		/* 이름 입력 필드 */
 		#personForm > div input[type="text"] {
 			width: 60px !important;
+			height: 32px !important;
 			flex-shrink: 0 !important;
-			padding: 4px 6px !important;
+			padding: 0 6px !important;
 			font-size: 12px !important;
 			border: 1px solid #ccc !important;
 			border-radius: 4px !important;
 			margin-right: 6px !important;
+			box-sizing: border-box !important;
+			line-height: normal !important;
 		}
 		
-		/* 성별 선택 - 강제 인라인 */
+		/* 성별 선택 - 이름과 같은 크기 */
 		#personForm > div .gender-selection {
 			display: inline-flex !important;
 			align-items: center !important;
-			gap: 3px !important;
+			justify-content: center !important;
+			width: 60px !important;
+			height: 32px !important;
+			gap: 2px !important;
 			flex-shrink: 0 !important;
 			margin: 0 6px 0 0 !important;
+			border: 1px solid #ccc !important;
+			border-radius: 4px !important;
+			background: #f9f9f9 !important;
 		}
 		
 		#personForm > div .gender-selection label {
 			display: inline-flex !important;
 			align-items: center !important;
-			gap: 2px !important;
-			font-size: 11px !important;
+			gap: 1px !important;
+			font-size: 10px !important;
 			white-space: nowrap !important;
 			margin: 0 !important;
+			cursor: pointer !important;
 		}
 		
 		#personForm > div .gender-selection input[type="radio"] {
@@ -453,22 +503,29 @@
 			transform: scale(0.9) !important;
 		}
 		
-		/* 경기수 표시 */
+		/* 경기수 표시 - 이름과 같은 크기 */
 		#personForm > div .match-count {
 			display: inline-block !important;
-			min-width: 25px !important;
+			width: 60px !important;
+			height: 32px !important;
+			line-height: 30px !important;
 			text-align: center !important;
 			font-size: 12px !important;
 			font-weight: bold !important;
 			color: #666 !important;
 			flex-shrink: 0 !important;
-			margin: 0 6px !important;
+			margin: 0 6px 0 0 !important;
+			border: 1px solid #ccc !important;
+			border-radius: 4px !important;
+			background: #f0f0f0 !important;
 		}
 		
-		/* 입장/퇴장 버튼 */
+		/* 입장/퇴장 버튼 - 이름과 같은 크기 */
 		#personForm > div .entry-btn {
 			display: inline-block !important;
-			padding: 4px 8px !important;
+			width: 60px !important;
+			height: 32px !important;
+			padding: 0 !important;
 			font-size: 10px !important;
 			font-weight: 500 !important;
 			border: none !important;
@@ -478,6 +535,8 @@
 			white-space: nowrap !important;
 			margin: 0 2px !important;
 			vertical-align: middle !important;
+			line-height: 32px !important;
+			text-align: center !important;
 		}
 		
 		#personForm > div .entry-btn:not(.exit) {
@@ -555,41 +614,37 @@
 				padding: 2px 4px;
 			}
 		}
-		
-		/* 테이블 스타일 */
-		#personInputs tr {
-			display: table-row;
-			width: 100%;
-		}
-		
-		#personInputs td {
-			display: table-cell;
-			border: 1px solid #ddd;
-			padding: 8px;
-			text-align: center;
-			vertical-align: middle;
-		}
-		
-		#personInputs input[type="text"] {
-			width: 100%;
-			padding: 5px;
-			border: 1px solid #ccc;
-			border-radius: 3px;
-		}
-		
-		#personInputs button {
-			padding: 5px 10px;
-			background: #4CAF50;
-			color: white;
-			border: none;
-			border-radius: 3px;
-			cursor: pointer;
-		}
-		
-		#personInputs button.exit {
-			background: #f44336;
-		}
 	</style>
+	
+	<script>
+		// DOM이 로드된 후 강제로 스타일 적용
+		document.addEventListener('DOMContentLoaded', function() {
+			function forceVerticalLayout() {
+				const personInputs = document.getElementById('personInputs');
+				if (personInputs) {
+					personInputs.style.display = 'block';
+					const divs = personInputs.querySelectorAll('div');
+					divs.forEach(function(div, index) {
+						div.style.display = 'block';
+						div.style.width = '100%';
+						div.style.marginBottom = '10px';
+						div.style.clear = 'both';
+						div.style.float = 'none';
+					});
+				}
+			}
+			
+			// 초기 적용
+			forceVerticalLayout();
+			
+			// DOM 변경 감지해서 재적용
+			const observer = new MutationObserver(forceVerticalLayout);
+			const personInputs = document.getElementById('personInputs');
+			if (personInputs) {
+				observer.observe(personInputs, { childList: true, subtree: true });
+			}
+		});
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -668,13 +723,7 @@
 		<div class="bottom-panel">
 			<h2>선수 정보</h2>
 			<form id="personForm">
-				<div style="border: 1px solid #ccc; padding: 10px;">
-					<table style="width: 100%; border-collapse: collapse;">
-						<tbody id="personInputs">
-							<!-- 선수 정보가 여기에 추가됩니다 -->
-						</tbody>
-					</table>
-				</div>
+				<div id="personInputs"></div>
 			</form>
 			<div id="result"></div>
 		</div>

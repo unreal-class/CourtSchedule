@@ -177,13 +177,6 @@ function toggleAbsent(index) {
 		
 		// absentPlayers에서도 제거
 		absentPlayers.delete(index);
-		
-		// 모든 선수가 제거되었으면 메시지 다시 표시
-		const personInputs = document.getElementById('personInputs');
-		const noPlayersMessage = document.getElementById('noPlayersMessage');
-		if (personInputs.children.length === 0 && noPlayersMessage) {
-			noPlayersMessage.style.display = 'block';
-		}
 	}
 }
 
@@ -213,12 +206,6 @@ function setSelectedGender(playerIndex, genderValue) {
 
 function addNextPlayer() {
 	const personInputs = document.getElementById('personInputs');
-	const noPlayersMessage = document.getElementById('noPlayersMessage');
-	
-	// 첫 번째 선수가 추가될 때 메시지 숨기기
-	if (noPlayersMessage && playerCount === 0) {
-		noPlayersMessage.style.display = 'none';
-	}
 	
 	const tr = document.createElement('tr');
 	tr.innerHTML = `
